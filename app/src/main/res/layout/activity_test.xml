@@ -9,92 +9,169 @@
     android:layout_margin="10dp"
     tools:context=".TestActivity">
 
-    <TextView
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:id="@+id/wordText1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="단어1"
-        android:textSize="20sp"
-        android:layout_margin="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="단어1 뜻"
-            android:textSize="20sp"
-            android:layout_margin="5dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/answer1"
-            android:layout_margin="5dp"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:id="@+id/wordText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="단어2"
-        android:textSize="20sp"
-        android:layout_margin="5dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="단어2 뜻"
-            android:textSize="20sp"
-            android:layout_margin="5dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/answer2"
-            android:layout_margin="5dp"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_gravity="center"
-        android:textAlignment="center"
-        android:id="@+id/wordText3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="단어3"
-        android:textSize="20sp"
-        android:layout_margin="5dp"/>
-
-    <LinearLayout
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="단어3 뜻"
-            android:textSize="20sp"
-            android:layout_margin="5dp"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/answer3"
-            android:layout_margin="5dp"/>
+            <!--테스트 1번-->
+            <LinearLayout
+                android:background="#A6FFF4E9"
+                android:id="@+id/testView1"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:layout_height="400dp">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/wordText1"
+                        android:layout_margin="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:text="word1"/>
+
+                    <EditText
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/answer1"
+                        android:layout_margin="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="  answer  "/>
+
+                    <Button
+                        android:background="#BDB1FF"
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/btnCheck1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:text="Check"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--테스트 2번-->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/testView2"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:background="#A6FFF4E9">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/wordText2"
+                        android:layout_margin="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:text="word2"/>
+
+                    <EditText
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/answer2"
+                        android:layout_margin="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="  answer  "/>
+
+                    <Button
+                        android:background="#BDB1FF"
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/btnCheck2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:text="Check"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--테스트 3번-->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/testView3"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:background="#A6FFF4E9">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/wordText3"
+                        android:layout_margin="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="30sp"
+                        android:text="word3"/>
+
+                    <EditText
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/answer3"
+                        android:layout_margin="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="  answer  "/>
+
+                    <Button
+                        android:background="#BDB1FF"
+                        android:textColor="#9F6CFF"
+                        android:fontFamily="@font/sebangbold"
+                        android:id="@+id/btnCheck3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:text="Check"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -105,19 +182,14 @@
         android:layout_margin="5dp">
 
         <Button
-            android:layout_margin="5dp"
-            android:layout_alignParentLeft="true"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:text="정답 확인"
-            android:id="@+id/btnCheck"/>
-
-        <Button
+            android:background="#BDB1FF"
+            android:textColor="#9F6CFF"
+            android:fontFamily="@font/sebangbold"
             android:layout_margin="5dp"
             android:layout_alignParentRight="true"
-            android:layout_width="130dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="돌아가기"
+            android:text="포기하기"
             android:id="@+id/btnReturn"/>
     </RelativeLayout>
 </LinearLayout>

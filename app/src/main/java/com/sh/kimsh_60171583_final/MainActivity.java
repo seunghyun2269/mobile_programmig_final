@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,26 +15,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Calendar;
 
-// 앱 시작시 뜨는 split view
-// 대화 상자에 아이콘 추가
-// 퀴즈 잘 풀었을때, 틀렸을때 -> 토스트 꾸미기 (우선 그냥 메세지로 처리)
-// 단어 - 뜻을 별개로 저장
-// 버튼 클릭시 explicit activity를 사용해 데이터 전달 -> 퀴즈 풀기 기능 추가
-// view container, adapterview는 어디에??
 
 public class MainActivity extends AppCompatActivity {
 
-    CalendarView cal;
-    TextView wordText, dateText;
+    MaterialCalendarView calendar;
+    TextView dateText, wordView1, wordView2, wordView3, answerView1, answerView2, answerView3;
     Button inputButton, deleteButton, testButton;
     View dialogView;
     EditText word1, meaning1, word2, meaning2, word3, meaning3;
     String fileName, words, str;
+    LinearLayout wordView, notiView;
     String[] wordList;
 
     @Override
@@ -43,12 +42,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("매일 3영단어");
 
-        cal = (CalendarView)findViewById(R.id.calendar);
-        wordText = (TextView) findViewById(R.id.wordText);
+        calendar = (MaterialCalendarView)findViewById(R.id.calendar);
+        wordView1 = (TextView) findViewById(R.id.word1);
+        wordView2 = (TextView) findViewById(R.id.word2);
+        wordView3 = (TextView) findViewById(R.id.word3);
+        answerView1 = (TextView) findViewById(R.id.answer1);
+        answerView2 = (TextView) findViewById(R.id.answer2);
+        answerView3 = (TextView) findViewById(R.id.answer3);
         dateText = (TextView) findViewById(R.id.wordDate);
         inputButton = (Button) findViewById(R.id.inputButton);
         deleteButton = (Button) findViewById(R.id.deleteButton);
         testButton = (Button) findViewById(R.id.testButton);
+        wordView = (LinearLayout) findViewById(R.id.wordView);
+        notiView = (LinearLayout) findViewById(R.id.notiView);
+
+        calendar.setSelectedDate(CalendarDay.today());
+        // calendar.addDecorator(new EventDecorator(Color.RED, Collections.singleton(CalendarDay.today())));
 
         final Calendar c = Calendar.getInstance();
         int cYear = c.get(Calendar.YEAR);
@@ -56,16 +65,19 @@ public class MainActivity extends AppCompatActivity {
         int cDay = c.get(Calendar.DAY_OF_MONTH);
 
         checkedDay(cYear, cMonth, cDay);
-        dateText.setText(Integer.toString(cYear) + "-" + Integer.toString(cMonth) + "-" + Integer.toString(cDay));
+        dateText.setText(Integer.toString(cMonth) + "월" + Integer.toString(cDay) + "일");
+
 
         // 달력의 날짜가 바뀔때 실행되는 이벤트 리스너
-        cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 // 날짜를 매개변수로 주면 해당 날짜에 저장된 단어가 있는지 체크하는 메소드 호출
-                checkedDay(year, month + 1, dayOfMonth);
-                dateText.setText(Integer.toString(year) + "-"
-                        + Integer.toString(month + 1) + "-" + Integer.toString(dayOfMonth));
+
+                // CalendarDay selectedDate = calendar.getSelectedDate();
+                // calendar.addDecorator(new EventDecorator(Color.RED, Collections.singleton(selectedDate)));
+                dateText.setText(Integer.toString(date.getMonth()) + "월" + Integer.toString(date.getDay()) + "일");
+                checkedDay(date.getYear(), date.getMonth(), date.getDay());
             }
         });
 
@@ -79,10 +91,20 @@ public class MainActivity extends AppCompatActivity {
                 if(wordFile.exists()){
                     boolean deleted = wordFile.delete();
                     if(deleted == true){
-                        // 단어 삭제 후
-                        wordText.setText(" "); //텍스트 비워주기
-                        inputButton.setText("단어입력"); //단어 입력 버튼 문구 수정
-                        testButton.setVisibility(View.INVISIBLE); //테스트 버튼 숨기기
+                        // 단어 삭제 후 텍스트 비워주기
+                        wordView1.setText(" ");
+                        wordView2.setText(" ");
+                        wordView3.setText(" ");
+                        answerView1.setText(" ");
+                        answerView2.setText(" ");
+                        answerView3.setText(" ");
+
+                        //단어 입력 버튼 문구 수정
+                        inputButton.setText("단어입력");
+                        testButton.setVisibility(View.INVISIBLE); // 테스트 버튼 숨기기
+                        // wordView 숨기기
+                        wordView.setVisibility(View.GONE);
+                        notiView.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(), "단어가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -95,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                dlg.setTitle("오늘의 단어입력");
+                // dlg.setTitle("단어 입력");
                 dlg.setView(dialogView);
 
                 dlg.setPositiveButton("입력", new DialogInterface.OnClickListener() {
@@ -129,9 +151,27 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), TestActivity.class);
                 intent.putExtra("wordFile", str);
 
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
+    }
+
+    // 테스트 액티비티로 부터 결과 받아와 처리하는 메소드
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            String cleared = data.getStringExtra("cleared");
+
+            if(cleared.equals("true")){
+                // 3단계까지 다 풀었을 때
+                Toast.makeText(getApplicationContext(), "성공!", Toast.LENGTH_SHORT).show();
+            }else{
+                // 3단계까지 다 못풀었을 때
+                Toast.makeText(getApplicationContext(), "실패...", Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     // 단어를 입력하면 저장하는 메소드
@@ -149,15 +189,22 @@ public class MainActivity extends AppCompatActivity {
             inFs.close();
 
             wordList = str.split(",");
-            String showTxt = "word 1 : " + wordList[0] + " (" + wordList[1] + ")" + "\r\n" +
-                    "word 2 : " + wordList[2] + " (" + wordList[3] + ")" +  "\r\n" +
-                    "word 3 : " + wordList[4] + " (" + wordList[5] + ")";
 
-            wordText.setText(showTxt);
+            // 저장후 오늘의 단어란에 띄우기
+            wordView1.setText(wordList[0]);
+            answerView1.setText(wordList[1]);
+            wordView2.setText(wordList[2]);
+            answerView2.setText(wordList[3]);
+            wordView3.setText(wordList[4]);
+            answerView3.setText(wordList[5]);
 
-            //단어 저장 후 입력버튼 문구수정 + 테스트 버튼 활성화
+            //단어 저장 후 입력버튼 문구수정
             inputButton.setText("단어수정");
+            // 테스트 버튼 활성화
             testButton.setVisibility(View.VISIBLE);
+            // word view보이게 설정
+            wordView.setVisibility(View.VISIBLE);
+            notiView.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), "단어저장", Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
@@ -181,19 +228,35 @@ public class MainActivity extends AppCompatActivity {
             inFs.close();
 
             wordList = str.split(",");
-            String showTxt = "word 1 : " + wordList[0] + " (" + wordList[1] + ")" + "\r\n" +
-                             "word 2 : " + wordList[2] + " (" + wordList[3] + ")" +  "\r\n" +
-                             "word 3 : " + wordList[4] + " (" + wordList[5] + ")";
 
-            wordText.setText(showTxt);
+            // 단어가 있으면 오늘의 단어란에 띄우기
+            wordView1.setText(wordList[0]);
+            answerView1.setText(wordList[1]);
+            wordView2.setText(wordList[2]);
+            answerView2.setText(wordList[3]);
+            wordView3.setText(wordList[4]);
+            answerView3.setText(wordList[5]);
+
             inputButton.setText("단어수정");
-            testButton.setVisibility(View.VISIBLE);
+            testButton.setVisibility(View.VISIBLE); //테스트 버튼 다시 활성화
+            //아래 단어 뷰 다시 보이게
+            wordView.setVisibility(View.VISIBLE);
+            notiView.setVisibility(View.GONE);
 
         } catch (Exception e) { // UnsupportedEncodingException , FileNotFoundException , IOException
-            // 단어가 없으면 오류발생 -> 단어 입력 필요
-            wordText.setText("");
+            // 단어가 없으면 오류발생 (텍스트 뷰 비워주기) -> 단어 입력 필요
+            wordView1.setText(" ");
+            wordView2.setText(" ");
+            wordView3.setText(" ");
+            answerView1.setText(" ");
+            answerView2.setText(" ");
+            answerView3.setText(" ");
+
             inputButton.setText("단어입력");
-            testButton.setVisibility(View.INVISIBLE);
+            testButton.setVisibility(View.INVISIBLE); //테스트 버튼 비활성화
+            //아래 단어 뷰 제거
+            wordView.setVisibility(View.GONE);
+            notiView.setVisibility(View.VISIBLE);
             e.printStackTrace();
         }
     }

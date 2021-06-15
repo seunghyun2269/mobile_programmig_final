@@ -3,8 +3,19 @@
 
     <style
         name="SplashTheme"
-        parent="Theme.AppCompat.NoActionBar">
+        parent="AppTheme.NoActionBar">
         <!--item name="android:windowBackground">@layout/activity_splash</item-->
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

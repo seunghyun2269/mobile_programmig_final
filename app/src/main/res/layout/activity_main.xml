@@ -3,58 +3,195 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity"
     android:layout_margin="10dp">
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical">
 
-        <CalendarView
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:mcv_showOtherDates="all"
+            app:mcv_selectionColor="#9F6CFF"
+            android:fontFamily="@font/sebangbold"
+
+            />
+
+
+        <TextView
+            android:id="@+id/wordDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text=" "
+            android:textAlignment="center"
+            android:textSize="17sp"
+            android:textColor="#9F6CFF"
+            android:fontFamily="@font/sebangbold"/>
 
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/notiView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#DDDDDD"
-            android:orientation="vertical"
+            android:layout_height="120dp"
             android:layout_weight="1"
-            android:layout_margin="10dp">
-
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/wordDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:text=" "
-                android:textAlignment="center"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/wordText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text=" "
-                android:textSize="15sp" />
+                android:text="No Words"
+                android:textColor="#9F6CFF"
+                android:fontFamily="@font/sebangbold"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/wordView"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:background="#A6FFF4E9"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:fontFamily="@font/sebangbold"
+                            android:id="@+id/word1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textSize="17sp"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal" />
+
+                        <TextView
+                            android:fontFamily="@font/sebangbold"
+                            android:id="@+id/answer1"
+                            android:textColor="#BDB1FF"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textSize="13sp"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:background="#A6FFF4E9"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:fontFamily="@font/sebangbold"
+                            android:id="@+id/word2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textSize="17sp"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal"/>
+
+                        <TextView
+                            android:textColor="#BDB1FF"
+                            android:fontFamily="@font/sebangbold"
+                            android:id="@+id/answer2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textSize="13sp"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#A6FFF4E9"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:fontFamily="@font/sebangbold"
+                            android:id="@+id/word3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textSize="17sp"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal" />
+
+                        <TextView
+                            android:textColor="#BDB1FF"
+                            android:fontFamily="@font/sebangbold"
+                            android:id="@+id/answer3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text=" "
+                            android:textSize="13sp"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
 
             <Button
+                android:background="#BDB1FF"
+                android:textColor="#9F6CFF"
+                android:fontFamily="@font/sebangbold"
                 android:layout_weight="1"
                 android:id="@+id/inputButton"
                 android:layout_width="wrap_content"
@@ -63,6 +200,9 @@
                 android:layout_margin="5dp"/>
 
             <Button
+                android:background="#BDB1FF"
+                android:textColor="#9F6CFF"
+                android:fontFamily="@font/sebangbold"
                 android:layout_weight="1"
                 android:id="@+id/testButton"
                 android:layout_width="wrap_content"
@@ -72,6 +212,9 @@
                 android:layout_margin="5dp"/>
 
             <Button
+                android:background="#BDB1FF"
+                android:textColor="#9F6CFF"
+                android:fontFamily="@font/sebangbold"
                 android:layout_weight="1"
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
