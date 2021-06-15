@@ -2,6 +2,7 @@ package com.sh.kimsh_60171583_final;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import java.util.Calendar;
 // 대화 상자에 아이콘 추가
 // 퀴즈 잘 풀었을때, 틀렸을때 -> 토스트 꾸미기 (우선 그냥 메세지로 처리)
 // 단어 - 뜻을 별개로 저장
-// 버튼 클릭시 explicit activity를 사용해 데이터 전당 -> 퀴즈 풀기 기능 추가
+// 버튼 클릭시 explicit activity를 사용해 데이터 전달 -> 퀴즈 풀기 기능 추가
 // view container, adapterview는 어디에??
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     Button inputButton, deleteButton, testButton;
     View dialogView;
     EditText word1, meaning1, word2, meaning2, word3, meaning3;
-    String fileName, words;
+    String fileName, words, str;
+    String[] wordList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                // 날짜를 매개변수로 주면 해당 날짜에 저장된 단어가 있는지 체크하는 메소드 호출
                 checkedDay(year, month + 1, dayOfMonth);
-                dateText.setText(Integer.toString(year) + "-" + Integer.toString(month + 1) + "-" + Integer.toString(dayOfMonth));
+                dateText.setText(Integer.toString(year) + "-"
+                        + Integer.toString(month + 1) + "-" + Integer.toString(dayOfMonth));
             }
         });
 
@@ -89,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         inputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setTitle("오늘의 단어입력");
@@ -106,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
                         word3 = (EditText)dialogView.findViewById(R.id.word3);
                         meaning3 = (EditText)dialogView.findViewById(R.id.meaning3);
 
-                        words = "word 1 : " + word1.getText().toString()  + " (" + meaning1.getText().toString() + ")" + "\r\n" +
-                                "word 2 : " + word2.getText().toString() + " (" + meaning2.getText().toString() + ")" +  "\r\n" +
-                                "word 3 : " + word3.getText().toString() + " (" + meaning3.getText().toString() + ")";
+                        words = word1.getText().toString()  + "," + meaning1.getText().toString() + ","
+                                 + word2.getText().toString() + "," + meaning2.getText().toString() + ","
+                                 + word3.getText().toString() + "," + meaning3.getText().toString();
 
                         // fileName을 넣고 저장 시키는 메소드 호출
                         save(fileName, words);
@@ -116,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
                 });
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
+            }
+        });
+
+        // 단어 테스트 버튼 클릭시
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+                intent.putExtra("wordFile", str);
+
+                startActivity(intent);
             }
         });
     }
@@ -131,9 +145,15 @@ public class MainActivity extends AppCompatActivity {
             FileInputStream inFs = openFileInput(fileN);
             byte[] txt = new byte[300];
             inFs.read(txt);
-            String str = new String(txt);
+            str = new String(txt);
             inFs.close();
-            wordText.setText(str);
+
+            wordList = str.split(",");
+            String showTxt = "word 1 : " + wordList[0] + " (" + wordList[1] + ")" + "\r\n" +
+                    "word 2 : " + wordList[2] + " (" + wordList[3] + ")" +  "\r\n" +
+                    "word 3 : " + wordList[4] + " (" + wordList[5] + ")";
+
+            wordText.setText(showTxt);
 
             //단어 저장 후 입력버튼 문구수정 + 테스트 버튼 활성화
             inputButton.setText("단어수정");
@@ -157,10 +177,15 @@ public class MainActivity extends AppCompatActivity {
             FileInputStream inFs = openFileInput(fileName);
             byte[] txt = new byte[300];
             inFs.read(txt);
-            String str = new String(txt);
+            str = new String(txt); //str에 해당날짜의 단어 파일 내용이 저장됨
             inFs.close();
 
-            wordText.setText(str);
+            wordList = str.split(",");
+            String showTxt = "word 1 : " + wordList[0] + " (" + wordList[1] + ")" + "\r\n" +
+                             "word 2 : " + wordList[2] + " (" + wordList[3] + ")" +  "\r\n" +
+                             "word 3 : " + wordList[4] + " (" + wordList[5] + ")";
+
+            wordText.setText(showTxt);
             inputButton.setText("단어수정");
             testButton.setVisibility(View.VISIBLE);
 
